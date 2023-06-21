@@ -1,8 +1,14 @@
 # depslib dependency file v1.0
-1687372634 source:e:\assignments uni\programming classes\restaurant\main.c
+1687378438 source:e:\assignments uni\programming classes\restaurant\main.c
+	"dec.h"
+	"def.h"
+
+1687378094 e:\assignments uni\programming classes\restaurant\dec.h
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
 	<time.h>
 	<Windows.h>
+
+1687378094 e:\assignments uni\programming classes\restaurant\def.h
 
