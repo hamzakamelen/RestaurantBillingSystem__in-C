@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1687372634 source:e:\assignments uni\programming classes\restaurant\main.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<time.h>
+	<Windows.h>
+
