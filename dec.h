@@ -4,7 +4,7 @@
 #include <time.h>
 #include <Windows.h>
 
-void BillGenerateHead(char name[50], char date[30], char time[30]);
+void BillGenerateHead(char name[50], char date[30], char time[30],int ID);
 void BillGenerateBody(char item[30], int qty, float price);
 void BillGenerateFooter(float total);
 void playSuccessTone();

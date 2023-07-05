@@ -1,12 +1,22 @@
 //===============FUNCTIONS Define=============
+int generateBillID()
+{
+    // Seed the random number generator with the current time
+    srand(time(NULL));
 
-void BillGenerateHead(char name[50], char date[30], char time[30])
+    // Generate a random number between 1000 and 9999
+    int billID = rand() % 9000 + 1000;
+
+    return billID;
+}
+void BillGenerateHead(char name[50], char date[30], char time[30],int ID)
 {
     printf("\n");
     printf("\n\t-----------------------------");
     printf("\n\t Welcome to Hamza Restaurant ");
     printf("\n\t-----------------------------");
     printf("\n%s", time);
+    printf("\nBill ID: %d", ID);
     printf("\nCustomer Name: %s", name);
     printf("\n");
     printf("----------------------------------------\n");

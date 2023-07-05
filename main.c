@@ -9,6 +9,7 @@ int main()
     struct orders ord;
     char saveBill = 'y', startAgain = 'y';
     char name[50];
+    int billID = 0;
     FILE *fp;
     while (startAgain == 'y')
     {
@@ -28,16 +29,19 @@ int main()
         printf("\nPlease Select Your Prefered Choice");
         printf("\n1: Generate Bill.");
         printf("\n2: Show All Bills.");
-        printf("\n3: Search Bill.");
-        printf("\n4: Exit.\n");
+        printf("\n3: Search Bill By Name.");
+        //printf("\n4: Search Bill By ID.");
+        printf("\n4: Delete Bill by Name.\n");
+        printf("\n5: Exit.\n");
         printf("\nYour Choice? ");
         scanf("%d", &choice);
         fgetc(stdin);
         playSuccessTone();
-        switch (choice)
+        switch(choice)
         {
         case 1:
             system("cls");
+            billID = generateBillID();
             printf("\nPlease Enter Customer Name: ");
             fgets(order.customerName, 50, stdin);
             // Removing \n from fgets func
@@ -53,14 +57,14 @@ int main()
                 printf("Please Enter Item %d: ", i + 1);
                 fgets(order.itm[i].item, 20, stdin);
                 order.itm[i].item[strlen(order.itm[i].item) - 1] = 0;
-                printf("Please Enter the Quantity ");
+                printf("Please Enter the Quantity: ");
                 scanf("%d", &order.itm[i].qty);
-                printf("Please Enter the unit price ");
+                printf("Please Enter the unit price: ");
                 scanf("%f", &order.itm[i].price);
                 total += order.itm[i].qty * order.itm[i].price;
             }
             system("cls");
-            BillGenerateHead(order.customerName, order.date,timeString);
+            BillGenerateHead(order.customerName, order.date,timeString,billID);
             for (int i = 0; i < order.QuantityofItems; i++)
             {
                 BillGenerateBody(order.itm[i].item, order.itm[i].qty, order.itm[i].price);
@@ -94,7 +98,7 @@ int main()
             while (fread(&ord, sizeof(struct orders), 1, fp))
             {
                 float tot = 0;
-                BillGenerateHead(ord.customerName, ord.date,timeString);
+                BillGenerateHead(ord.customerName, ord.date,timeString,billID);
                 for (int i = 0; i < ord.QuantityofItems; i++)
                 {
                     BillGenerateBody(ord.itm[i].item, ord.itm[i].qty, ord.itm[i].price);
@@ -120,7 +124,7 @@ int main()
                 if (strcmp(ord.customerName, name) == 0)
                 {
                      playSuccessTone();
-                    BillGenerateHead(ord.customerName, ord.date,timeString);
+                    BillGenerateHead(ord.customerName, ord.date,timeString,billID);
                     for (int i = 0; i < ord.QuantityofItems; i++)
                     {
                         BillGenerateBody(ord.itm[i].item, ord.itm[i].qty, ord.itm[i].price);
@@ -136,11 +140,44 @@ int main()
                 printf("\n%s Not Found..!", name);
             }
             break;
-        case 4:
+        /*case 4:
+            system("cls");
+            printf("\nEnter the Name of the Customer ");
+            fgets(name, 50, stdin);
+            name[strlen(name) - 1] = 0;
+            system("cls");
+            fp = fopen("RestaurantBill.txt", "r");
+            printf("\n");
+            printf("********Bill of %s********\n", name);
+            while(fread(&ord, sizeof(struct orders), 1, fp))
+            {
+                float tot = 0;
+                // strcmp to compare two strings
+                if (strcmp(ord.customerName, name) == 0)
+                {
+                     playSuccessTone();
+                    BillGenerateHead(ord.customerName, ord.date,timeString,billID);
+                    for (int i = 0; i < ord.QuantityofItems; i++)
+                    {
+                        BillGenerateBody(ord.itm[i].item, ord.itm[i].qty, ord.itm[i].price);
+                        tot += ord.itm[i].qty * ord.itm[i].price;
+                    }
+                    BillGenerateFooter(tot);
+                    BillFound = 1;
+                }
+            }
+            if (!BillFound)
+            {
+                playErrorTone();
+                printf("\n%s Not Found..!", name);
+            }
+            break;*/
+        case 5:
              playSuccessTone();
             printf("\n\t\t Bye Bye");
             exit(0);
             break;
+
         default:
             playErrorTone();
             printf("\nInvalid Choice");
@@ -153,3 +190,34 @@ int main()
     printf("\n\t\tByeee....!");
     return 0;
 }
+/*case 4:
+    system("cls");
+    printf("\nEnter the Name of the Customer whose bill you want to delete: ");
+    fgets(name, 50, stdin);
+    name[strlen(name) - 1] = 0;
+    system("cls");
+    fp = fopen("RestaurantBill.txt", "r+");
+    struct orders ord;
+    int found = 0;
+    while (fread(&ord, sizeof(struct orders), 1, fp))
+    {
+        if (strcmp(ord.customerName, name) == 0)
+        {
+            found = 1;
+            // Delete the bill from the file
+            fseek(fp, -sizeof(struct orders), SEEK_CUR);
+            fwrite(&ord, sizeof(struct orders), 1, fp);
+        }
+    }
+    fclose(fp);
+    if (found)
+    {
+        playSuccessTone();
+        printf("\nBill of %s deleted successfully!", name);
+    }
+    else
+    {
+        playErrorTone();
+        printf("\n%s Not Found..!", name);
+    }
+    break;*/
