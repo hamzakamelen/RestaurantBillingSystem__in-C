@@ -1,4 +1,4 @@
-//===============FUNCTIONS Define=============
+//===============Functions Define=============
 int generateBillID()
 {
     // Seed the random number generator with the current time

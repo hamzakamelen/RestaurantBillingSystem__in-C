@@ -41,6 +41,7 @@ int main()
             // Generate Bills
         case 1:
             system("cls");
+            printf("-----Generate New Bill-----");
             order.billID = generateBillID();
             printf("\nPlease Enter Customer Name: ");
             fgets(order.customerName, 50, stdin);
@@ -95,7 +96,7 @@ int main()
             system("cls");
             fp = fopen("RestaurantBill.txt", "r");
             printf("\n");
-            printf("********Previous Bills********\n");
+            printf("----------All Bills----------\n");
             while (fread(&ord, sizeof(struct orders), 1, fp))
             {
                 float tot = 0;
@@ -112,6 +113,7 @@ int main()
             // Search Bill By Name
         case 3:
             system("cls");
+            printf("-----Search Bill By Name-----");
             printf("\nEnter the Name of the Customer ");
             fgets(name, 50, stdin);
             name[strlen(name) - 1] = 0;
@@ -145,7 +147,7 @@ int main()
         // Delete Bill By Name
 case 4:
     system("cls");
-    printf("******Deleting Bill*********");
+    printf("-----Delete Bill By Name-----");
     printf("\nEnter the Name of the Customer: ");
     fgets(name, 50, stdin);
     name[strlen(name) - 1] = '\0';
@@ -185,7 +187,7 @@ case 4:
 //Exit
         case 5:
              playSuccessTone();
-            printf("\n\t\t Bye Bye");
+            printf("\n\t\t Bye Bye.........!");
             exit(0);
             break;
 
