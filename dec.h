@@ -21,6 +21,8 @@ struct orders
 {
     char customerName[50];
     char date[50];
+    int billID;
+    char *time;
     int QuantityofItems;
     struct items itm[50];
 };

@@ -9,7 +9,6 @@ int main()
     struct orders ord;
     char saveBill = 'y', startAgain = 'y';
     char name[50];
-    int billID;
     FILE *fp;
     while (startAgain == 'y')
     {
@@ -20,6 +19,7 @@ int main()
           time(&currentTime);
          char *timeString = ctime(&currentTime);
          timeString[strlen(timeString) - 1] = '\0'; // Remove the newline character
+         order.time = timeString;
         // START
         system("cls");
         printf("\n\t----------------");
@@ -41,7 +41,7 @@ int main()
             // Generate Bills
         case 1:
             system("cls");
-            billID = generateBillID();
+            order.billID = generateBillID();
             printf("\nPlease Enter Customer Name: ");
             fgets(order.customerName, 50, stdin);
             // Removing \n from fgets func
@@ -64,7 +64,7 @@ int main()
                 total += order.itm[i].qty * order.itm[i].price;
             }
             system("cls");
-            BillGenerateHead(order.customerName, order.date,timeString,billID);
+            BillGenerateHead(order.customerName, order.date,timeString,order.billID);
             for (int i = 0; i < order.QuantityofItems; i++)
             {
                 BillGenerateBody(order.itm[i].item, order.itm[i].qty, order.itm[i].price);
@@ -99,7 +99,7 @@ int main()
             while (fread(&ord, sizeof(struct orders), 1, fp))
             {
                 float tot = 0;
-                BillGenerateHead(ord.customerName, ord.date,timeString,billID);
+                BillGenerateHead(ord.customerName, ord.date,timeString,order.billID);
                 for (int i = 0; i < ord.QuantityofItems; i++)
                 {
                     BillGenerateBody(ord.itm[i].item, ord.itm[i].qty, ord.itm[i].price);
@@ -126,7 +126,7 @@ int main()
                 if (strcmp(ord.customerName, name) == 0)
                 {
                      playSuccessTone();
-                    BillGenerateHead(ord.customerName, ord.date,timeString,billID);
+                    BillGenerateHead(ord.customerName, ord.date,timeString,order.billID);
                     for (int i = 0; i < ord.QuantityofItems; i++)
                     {
                         BillGenerateBody(ord.itm[i].item, ord.itm[i].qty, ord.itm[i].price);
