@@ -9,6 +9,7 @@ int main()
     struct orders ord;
     char saveBill = 'y', startAgain = 'y';
     char name[50];
+    int billID;
     FILE *fp;
     while (startAgain == 'y')
     {
@@ -19,7 +20,6 @@ int main()
           time(&currentTime);
          char *timeString = ctime(&currentTime);
          timeString[strlen(timeString) - 1] = '\0'; // Remove the newline character
-         order.time = timeString;
         // START
         system("cls");
         printf("\n\t----------------");
@@ -100,7 +100,7 @@ int main()
             while (fread(&ord, sizeof(struct orders), 1, fp))
             {
                 float tot = 0;
-                BillGenerateHead(ord.customerName, ord.date,timeString,order.billID);
+                BillGenerateHead(ord.customerName, ord.date,timeString,ord.billID);
                 for (int i = 0; i < ord.QuantityofItems; i++)
                 {
                     BillGenerateBody(ord.itm[i].item, ord.itm[i].qty, ord.itm[i].price);
@@ -128,7 +128,7 @@ int main()
                 if (strcmp(ord.customerName, name) == 0)
                 {
                      playSuccessTone();
-                    BillGenerateHead(ord.customerName, ord.date,timeString,order.billID);
+                    BillGenerateHead(ord.customerName, ord.date,timeString,ord.billID);
                     for (int i = 0; i < ord.QuantityofItems; i++)
                     {
                         BillGenerateBody(ord.itm[i].item, ord.itm[i].qty, ord.itm[i].price);
@@ -184,8 +184,46 @@ case 4:
         printf("\n%sBill Not Found..!", name);
     }
     break;
+    // Delete Bill By ID
+case 5:
+    system("cls");
+    printf("-----Delete Bill By ID-----");
+    printf("\nEnter the ID of the Bill: ");
+    scanf("%d", &billID);
+    system("cls");
+    fp = fopen("RestaurantBill.txt", "r");
+    FILE *tempFILE = fopen("temp.txt", "w"); // Create a temporary file for writing
+    int Found = 0;
+    while (fread(&ord, sizeof(struct orders), 1, fp))
+    {
+        if (ord.billID != billID)
+        {
+            // Write the non-matching bill entries to the temporary file
+            fwrite(&ord, sizeof(struct orders), 1, tempFILE);
+        }
+        else
+        {
+            Found = 1;
+        }
+    }
+    fclose(fp);
+    fclose(tempFILE);
+    remove("RestaurantBill.txt"); // Remove the original file
+    rename("temp.txt", "RestaurantBill.txt"); // Rename the temporary file to the original file name
+
+    if (Found)
+    {
+        playSuccessTone();
+        printf("\nBill with ID %d deleted successfully!", billID);
+    }
+    else
+    {
+        playErrorTone();
+        printf("\nBill with ID %d not found..!", billID);
+    }
+    break;
 //Exit
-        case 5:
+        case 6:
              playSuccessTone();
             printf("\n\t\t Bye Bye.........!");
             exit(0);
