@@ -44,7 +44,7 @@ int main()
             // Generate Bills
         case 1:
             system("cls");
-            printf("-----Generate New Bill-----");
+            printf("\n-----Generate New Bill-----");
             order.billID = generateBillID();
             printf("\nPlease Enter Customer Name: ");
             fgets(order.customerName, 50, stdin);
@@ -99,7 +99,7 @@ int main()
             system("cls");
             fp = fopen("RestaurantBill.txt", "r");
             printf("\n");
-            printf("----------All Bills----------\n");
+            printf("\n----------All Bills----------");
             while (fread(&ord, sizeof(struct orders), 1, fp))
             {
                 float tot = 0;
@@ -116,7 +116,7 @@ int main()
             // Search Bill By Name
         case 3:
             system("cls");
-            printf("-----Search Bill By Name-----");
+            printf("\n-----Search Bill By Name-----");
             printf("\nEnter the Name of the Customer ");
             fgets(name, 50, stdin);
             name[strlen(name) - 1] = 0;
@@ -144,13 +144,13 @@ int main()
             if (!BillFound)
             {
                 playErrorTone();
-                printf("\n%s Not Found..!", name);
+                printf("\nBill of %s Not Found..!", name);
             }
             break;
             //Search Bill By ID
          case 4:
             system("cls");
-            printf("-----Search Bill By ID-----");
+            printf("\n-----Search Bill By ID-----");
             printf("\nEnter the Bill ID ");
            scanf("%d",&DeleteID);
             system("cls");
@@ -182,7 +182,7 @@ int main()
         // Delete Bill By Name
 case 5:
     system("cls");
-    printf("-----Delete Bill By Name-----");
+    printf("\n-----Delete Bill By Name-----");
     printf("\nEnter the Name of the Customer: ");
     fgets(name, 50, stdin);
     name[strlen(name) - 1] = '\0';
@@ -222,7 +222,7 @@ case 5:
     // Delete Bill By ID
 case 6:
     system("cls");
-    printf("-----Delete Bill By ID-----");
+    printf("\n-----Delete Bill By ID-----");
     printf("\nEnter the ID of the Bill: ");
     scanf("%d", &billID);
     system("cls");
