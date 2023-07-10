@@ -10,6 +10,7 @@ int main()
     char saveBill = 'y', startAgain = 'y';
     char name[50];
     int billID;
+    int DeleteID;
     FILE *fp;
     while (startAgain == 'y')
     {
@@ -30,9 +31,10 @@ int main()
         printf("\n1: Generate Bill.");
         printf("\n2: Show All Bills.");
         printf("\n3: Search Bill By Name.");
-        printf("\n4: Delete Bill by Name.");
-        printf("\n5: Delete Bill by ID.");
-        printf("\n6: Exit.\n");
+        printf("\n4: Search Bill By ID.");
+        printf("\n5: Delete Bill by Name.");
+        printf("\n6: Delete Bill by ID.");
+        printf("\n7: Exit.\n");
         printf("\nYour Choice? ");
         scanf("%d", &choice);
         fgetc(stdin);
@@ -145,8 +147,40 @@ int main()
                 printf("\n%s Not Found..!", name);
             }
             break;
+            //Search Bill By ID
+         case 4:
+            system("cls");
+            printf("-----Search Bill By ID-----");
+            printf("\nEnter the Bill ID ");
+           scanf("%d",&DeleteID);
+            system("cls");
+            fp = fopen("RestaurantBill.txt", "r");
+            printf("\n");
+            printf("***Bill %d***\n", DeleteID);
+            while(fread(&ord, sizeof(struct orders), 1, fp))
+            {
+                float TOT = 0;
+                if (ord.billID == DeleteID)
+                {
+                     playSuccessTone();
+                    BillGenerateHead(ord.customerName, ord.date,timeString,ord.billID);
+                    for (int i = 0; i < ord.QuantityofItems; i++)
+                    {
+                        BillGenerateBody(ord.itm[i].item, ord.itm[i].qty, ord.itm[i].price);
+                        TOT += ord.itm[i].qty * ord.itm[i].price;
+                    }
+                    BillGenerateFooter(TOT);
+                    BillFound = 1;
+                }
+            }
+            if (!BillFound)
+            {
+                playErrorTone();
+                printf("\nBill %d Not Found..!", DeleteID);
+            }
+            break;
         // Delete Bill By Name
-case 4:
+case 5:
     system("cls");
     printf("-----Delete Bill By Name-----");
     printf("\nEnter the Name of the Customer: ");
@@ -186,7 +220,7 @@ case 4:
     }
     break;
     // Delete Bill By ID
-case 5:
+case 6:
     system("cls");
     printf("-----Delete Bill By ID-----");
     printf("\nEnter the ID of the Bill: ");
@@ -224,7 +258,7 @@ case 5:
     }
     break;
 //Exit
-        case 6:
+        case 7:
              playSuccessTone();
             printf("\n\t\t Bye Bye.........!");
             exit(0);
