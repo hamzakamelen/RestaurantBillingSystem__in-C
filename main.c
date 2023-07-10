@@ -31,7 +31,8 @@ int main()
         printf("\n2: Show All Bills.");
         printf("\n3: Search Bill By Name.");
         printf("\n4: Delete Bill by Name.");
-        printf("\n5: Exit.\n");
+        printf("\n5: Delete Bill by ID.");
+        printf("\n6: Exit.\n");
         printf("\nYour Choice? ");
         scanf("%d", &choice);
         fgetc(stdin);
